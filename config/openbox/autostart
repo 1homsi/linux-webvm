@@ -15,6 +15,9 @@ numlockx on &
 # ── Wallpaper ─────────────────────────────────────────────────────────────────
 feh --bg-scale /root/wallpaper.png &
 
+# ── Compositor (shadows, no fading, xrender so it works in VNC) ──────────────
+picom --config /root/.config/picom/picom.conf --daemon
+
 # ── Notification daemon ───────────────────────────────────────────────────────
 dunst &
 

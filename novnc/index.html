@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Linux Desktop</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #11111b;
+      overflow: hidden;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+
+    /* ── Loading overlay ───────────────────────────────────────────────────── */
+    #loading {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      background: #11111b;
+      transition: opacity 0.4s ease;
+    }
+
+    #loading.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .logo {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #45475a;
+    }
+
+    .spinner {
+      width: 36px;
+      height: 36px;
+      border: 2.5px solid #313244;
+      border-top-color: #89b4fa;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .status {
+      font-size: 12px;
+      color: #6c7086;
+      letter-spacing: 0.3px;
+    }
+
+    /* ── Error state ───────────────────────────────────────────────────────── */
+    #error {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 300;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      background: #11111b;
+    }
+
+    #error.visible { display: flex; }
+
+    .error-icon { font-size: 32px; }
+
+    .error-title {
+      color: #f38ba8;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .error-msg {
+      color: #6c7086;
+      font-size: 13px;
+      text-align: center;
+      max-width: 320px;
+      line-height: 1.5;
+    }
+
+    .retry-btn {
+      margin-top: 8px;
+      padding: 8px 20px;
+      background: #313244;
+      color: #cdd6f4;
+      border: 1px solid #45475a;
+      border-radius: 6px;
+      font-size: 13px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .retry-btn:hover { background: #45475a; }
+
+    /* ── VNC canvas ────────────────────────────────────────────────────────── */
+    #screen {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+    }
+
+    #screen canvas {
+      display: block;
+      width: 100% !important;
+      height: 100% !important;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="loading">
+    <span class="logo">Linux Desktop</span>
+    <div class="spinner"></div>
+    <span class="status" id="status-text">Connecting…</span>
+  </div>
+
+  <div id="error">
+    <span class="error-icon">⚠</span>
+    <span class="error-title">Connection lost</span>
+    <p class="error-msg">The desktop disconnected. The container may still be starting up.</p>
+    <button class="retry-btn" onclick="location.reload()">Reconnect</button>
+  </div>
+
+  <div id="screen"></div>
+
+  <script type="module">
+    import RFB from './core/rfb.js';
+
+    const loading   = document.getElementById('loading');
+    const errorBox  = document.getElementById('error');
+    const statusTxt = document.getElementById('status-text');
+    const screen    = document.getElementById('screen');
+
+    const proto  = location.protocol === 'https:' ? 'wss:' : 'ws:';
+    const wsUrl  = `${proto}//${location.hostname}:${location.port || 80}/`;
+
+    statusTxt.textContent = 'Connecting…';
+
+    let rfb;
+
+    function connect() {
+      rfb = new RFB(screen, wsUrl, {
+        credentials: { password: 'password' }
+      });
+
+      rfb.scaleViewport  = true;
+      rfb.resizeSession  = false;
+      rfb.showDotCursor  = true;
+      rfb.clipViewport   = false;
+
+      rfb.addEventListener('connect', () => {
+        statusTxt.textContent = 'Connected';
+        loading.classList.add('hidden');
+        errorBox.classList.remove('visible');
+      });
+
+      rfb.addEventListener('disconnect', (e) => {
+        loading.classList.remove('hidden');
+        if (e.detail.clean) {
+          statusTxt.textContent = 'Disconnected';
+        } else {
+          loading.classList.add('hidden');
+          errorBox.classList.add('visible');
+        }
+      });
+
+      rfb.addEventListener('credentialsrequired', () => {
+        // Password was wrong or not accepted — surface the error
+        statusTxt.textContent = 'Authentication failed';
+      });
+    }
+
+    connect();
+  </script>
+</body>
+</html>

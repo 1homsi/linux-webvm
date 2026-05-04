@@ -22,6 +22,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     feh \
     # Launcher
     rofi \
+    # Compositor
+    picom \
     # GTK theming
     arc-theme \
     gtk2-engines-murrine \
@@ -87,7 +89,8 @@ RUN mkdir -p \
     /root/.config/tint2 \
     /root/.config/rofi \
     /root/.config/gtk-3.0 \
-    /root/.config/dunst
+    /root/.config/dunst \
+    /root/.config/picom
 
 # Openbox
 COPY config/openbox/rc.xml      /root/.config/openbox/rc.xml
@@ -110,6 +113,15 @@ COPY config/Xresources           /root/.Xresources
 
 # dunst notifications
 COPY config/dunst/dunstrc        /root/.config/dunst/dunstrc
+
+# Picom compositor
+COPY config/picom/picom.conf     /root/.config/picom/picom.conf
+
+# Bundled Openbox theme (guaranteed to load, no apt dependency)
+COPY config/themes/              /usr/share/themes/
+
+# Custom noVNC landing page (auto-connects, full-screen)
+COPY novnc/index.html            /usr/share/novnc/index.html
 
 # Wallpaper
 COPY wallpaper.png               /root/wallpaper.png

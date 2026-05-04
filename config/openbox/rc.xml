@@ -23,9 +23,9 @@
   </placement>
 
   <theme>
-    <!-- Arc-Dark ships its own openbox theme -->
-    <name>Arc-Dark</name>
-    <titleLayout>NliaMC</titleLayout>
+    <!-- Bundled custom theme — always available regardless of apt packages -->
+    <name>Catppuccin</name>
+    <titleLayout>NLIMC</titleLayout>
     <keepBorder>yes</keepBorder>
     <animateIconify>no</animateIconify>
     <font place="ActiveWindow">

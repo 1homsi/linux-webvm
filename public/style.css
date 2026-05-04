@@ -1,8 +1,8 @@
 /* Catppuccin Mocha */
 :root {
-  --crust:    #11111b;
-  --mantle:   #181825;
-  --base:     #1e1e2e;
+  --crust:    #151515;
+  --mantle:   #1a1a1a;
+  --base:     #1e1e1e;
   --surface0: #313244;
   --surface1: #45475a;
   --surface2: #585b70;
@@ -52,37 +52,13 @@ html, body {
   overflow: hidden;
 }
 
-.sidebar-header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 14px 14px 12px;
-  border-bottom: 1px solid var(--surface0);
-}
-
-.logo {
-  width: 28px; height: 28px;
-  background: linear-gradient(135deg, var(--blue) 0%, var(--mauve) 100%);
-  border-radius: 7px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 15px; color: var(--crust); font-weight: 700;
-  flex-shrink: 0;
-}
-
-.app-name {
-  font-weight: 600;
-  font-size: 14px;
-  color: var(--text);
-  letter-spacing: 0.2px;
-}
-
 .section-label {
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 1.1px;
   text-transform: uppercase;
   color: var(--overlay0);
-  padding: 14px 14px 6px;
+  padding: 20px 14px 8px;
 }
 
 #workspace-list {
@@ -99,8 +75,8 @@ html, body {
   display: flex;
   align-items: center;
   gap: 9px;
-  padding: 7px 8px;
-  border-radius: 7px;
+  padding: 11px 10px;
+  border-radius: 8px;
   cursor: pointer;
   user-select: none;
   transition: background 0.1s;

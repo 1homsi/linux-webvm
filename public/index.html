@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Terminal Workspace</title>
+
+  <!-- xterm.js from CDN (browser has internet; avoids bundling complexity) -->
+  <link rel="stylesheet" href="https://unpkg.com/xterm@5.3.0/css/xterm.css" />
+  <script src="https://unpkg.com/xterm@5.3.0/lib/xterm.js"></script>
+  <script src="https://unpkg.com/xterm-addon-fit@0.8.0/lib/xterm-addon-fit.js"></script>
+  <script src="https://unpkg.com/xterm-addon-web-links@0.9.0/lib/xterm-addon-web-links.js"></script>
+
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <div id="app">
+
+    <!-- ── Sidebar ──────────────────────────────────────────────────────── -->
+    <aside id="sidebar">
+      <div class="sidebar-header">
+        <div class="logo">
+          <span class="logo-icon">⌥</span>
+        </div>
+        <span class="app-name">Terminal</span>
+      </div>
+
+      <div class="section-label">WORKSPACES</div>
+      <div id="workspace-list"></div>
+
+      <div class="sidebar-footer">
+        <button id="btn-new-ws">+ New Workspace</button>
+      </div>
+    </aside>
+
+    <!-- ── Main ─────────────────────────────────────────────────────────── -->
+    <div id="main">
+
+      <!-- Tab bar -->
+      <div id="tabbar">
+        <div id="tab-list"></div>
+        <button id="btn-new-tab" title="New tab">+</button>
+      </div>
+
+      <!-- Terminal panes mount here -->
+      <div id="terminal-root"></div>
+
+    </div>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>

@@ -20,22 +20,34 @@
     <policy>Smart</policy>
     <center>yes</center>
     <monitor>Primary</monitor>
-    <primaryMonitor>1</primaryMonitor>
   </placement>
 
   <theme>
-    <name>Clearlooks</name>
+    <!-- Arc-Dark ships its own openbox theme -->
+    <name>Arc-Dark</name>
     <titleLayout>NliaMC</titleLayout>
     <keepBorder>yes</keepBorder>
     <animateIconify>no</animateIconify>
     <font place="ActiveWindow">
-      <name>DejaVu Sans</name>
+      <name>Roboto</name>
       <size>10</size>
       <weight>bold</weight>
       <slant>normal</slant>
     </font>
     <font place="InactiveWindow">
-      <name>DejaVu Sans</name>
+      <name>Roboto</name>
+      <size>10</size>
+      <weight>normal</weight>
+      <slant>normal</slant>
+    </font>
+    <font place="MenuHeader">
+      <name>Roboto</name>
+      <size>10</size>
+      <weight>bold</weight>
+      <slant>normal</slant>
+    </font>
+    <font place="MenuItem">
+      <name>Roboto</name>
       <size>10</size>
       <weight>normal</weight>
       <slant>normal</slant>
@@ -49,78 +61,146 @@
       <name>Main</name>
       <name>Web</name>
     </names>
-    <popupTime>875</popupTime>
+    <popupTime>0</popupTime>
   </desktops>
 
   <resize>
     <drawContents>yes</drawContents>
-    <popupShow>Nonpixel</popupShow>
-    <popupPosition>Center</popupPosition>
-    <popupFixedPosition>
-      <x>10</x>
-      <y>10</y>
-    </popupFixedPosition>
+    <popupShow>Never</popupShow>
   </resize>
 
+  <!-- Reserve space for tint2 panel at the bottom -->
   <margins>
     <top>0</top>
-    <bottom>32</bottom>
+    <bottom>40</bottom>
     <left>0</left>
     <right>0</right>
   </margins>
 
-  <dock>
-    <position>Bottom</position>
-    <floatingX>0</floatingX>
-    <floatingY>0</floatingY>
-    <noStrut>no</noStrut>
-    <stacking>Above</stacking>
-    <direction>Horizontal</direction>
-    <autoHide>no</autoHide>
-    <hideDelay>300</hideDelay>
-    <showDelay>300</showDelay>
-    <moveButton>Middle</moveButton>
-  </dock>
-
   <keyboard>
     <chainQuitKey>C-g</chainQuitKey>
-    <keybind key="C-F2">
-      <action name="Execute"><command>xterm</command></action>
+
+    <!-- ── Launcher ─────────────────────────────────────────────────────── -->
+    <keybind key="W-space">
+      <action name="Execute"><command>rofi -show drun -show-icons</command></action>
     </keybind>
-    <keybind key="C-F1">
+    <!-- Super alone also opens launcher via xdotool workaround isn't needed;
+         W-space is the reliable binding -->
+    <keybind key="W-r">
+      <action name="Execute"><command>rofi -show run</command></action>
+    </keybind>
+
+    <!-- ── App shortcuts ────────────────────────────────────────────────── -->
+    <keybind key="W-t">
+      <action name="Execute"><command>lxterminal</command></action>
+    </keybind>
+    <keybind key="W-e">
       <action name="Execute"><command>pcmanfm</command></action>
+    </keybind>
+    <keybind key="W-b">
+      <action name="Execute"><command>firefox</command></action>
+    </keybind>
+
+    <!-- ── Window switching ─────────────────────────────────────────────── -->
+    <keybind key="A-Tab">
+      <action name="NextWindow">
+        <finalactions>
+          <action name="Focus"/>
+          <action name="Raise"/>
+          <action name="Unshade"/>
+        </finalactions>
+      </action>
+    </keybind>
+    <keybind key="A-S-Tab">
+      <action name="PreviousWindow">
+        <finalactions>
+          <action name="Focus"/>
+          <action name="Raise"/>
+          <action name="Unshade"/>
+        </finalactions>
+      </action>
+    </keybind>
+
+    <!-- ── Window tiling ────────────────────────────────────────────────── -->
+    <!-- Tile left half -->
+    <keybind key="W-Left">
+      <action name="UnMaximize"/>
+      <action name="MoveResizeTo">
+        <x>0</x><y>0</y><width>50%</width><height>100%</height>
+      </action>
+    </keybind>
+    <!-- Tile right half -->
+    <keybind key="W-Right">
+      <action name="UnMaximize"/>
+      <action name="MoveResizeTo">
+        <x>50%</x><y>0</y><width>50%</width><height>100%</height>
+      </action>
+    </keybind>
+    <!-- Maximize -->
+    <keybind key="W-Up">
+      <action name="Maximize"/>
+    </keybind>
+    <!-- Restore / unmaximize -->
+    <keybind key="W-Down">
+      <action name="Unmaximize"/>
+    </keybind>
+    <!-- Toggle maximize -->
+    <keybind key="W-m">
+      <action name="ToggleMaximize"/>
+    </keybind>
+
+    <!-- ── Workspace switching ──────────────────────────────────────────── -->
+    <keybind key="W-1">
+      <action name="GoToDesktop"><to>1</to></action>
+    </keybind>
+    <keybind key="W-2">
+      <action name="GoToDesktop"><to>2</to></action>
+    </keybind>
+    <keybind key="W-S-1">
+      <action name="SendToDesktop"><to>1</to><follow>true</follow></action>
+    </keybind>
+    <keybind key="W-S-2">
+      <action name="SendToDesktop"><to>2</to><follow>true</follow></action>
+    </keybind>
+
+    <!-- ── Window management ────────────────────────────────────────────── -->
+    <keybind key="A-F4">
+      <action name="Close"/>
+    </keybind>
+    <keybind key="A-F5">
+      <action name="Restore"/>
+    </keybind>
+    <keybind key="A-F10">
+      <action name="ToggleMaximize"/>
+    </keybind>
+
+    <!-- ── Screenshot placeholder (scrot if installed) ──────────────────── -->
+    <keybind key="Print">
+      <action name="Execute"><command>sh -c 'command -v scrot &amp;&amp; scrot ~/screenshot-%Y%m%d-%H%M%S.png'</command></action>
     </keybind>
   </keyboard>
 
   <mouse>
-    <dragThreshold>1</dragThreshold>
+    <dragThreshold>3</dragThreshold>
     <doubleClickTime>200</doubleClickTime>
-    <screenEdgeWarpTime>400</screenEdgeWarpTime>
+    <screenEdgeWarpTime>0</screenEdgeWarpTime>
     <screenEdgeWarpMouse>false</screenEdgeWarpMouse>
+
     <context name="Frame">
       <mousebind button="A-Left" action="Press">
-        <action name="Focus"/>
-        <action name="Raise"/>
-      </mousebind>
-      <mousebind button="A-Left" action="Click">
-        <action name="Unshade"/>
+        <action name="Focus"/><action name="Raise"/>
       </mousebind>
       <mousebind button="A-Left" action="Drag">
         <action name="Move"/>
-      </mousebind>
-      <mousebind button="A-Right" action="Press">
-        <action name="Focus"/>
-        <action name="Raise"/>
-        <action name="Unshade"/>
       </mousebind>
       <mousebind button="A-Right" action="Drag">
         <action name="Resize"/>
       </mousebind>
     </context>
+
     <context name="Titlebar">
       <mousebind button="Left" action="Press">
-        <action name="Focus"/>
-        <action name="Raise"/>
+        <action name="Focus"/><action name="Raise"/>
       </mousebind>
       <mousebind button="Left" action="Drag">
         <action name="Move"/>
@@ -130,15 +210,54 @@
       </mousebind>
       <mousebind button="Middle" action="Press">
         <action name="Lower"/>
-        <action name="FocusToBottom"/>
-        <action name="Unfocus"/>
       </mousebind>
       <mousebind button="Right" action="Press">
-        <action name="Focus"/>
-        <action name="Raise"/>
+        <action name="Focus"/><action name="Raise"/>
         <action name="ShowMenu"><menu>client-menu</menu></action>
       </mousebind>
     </context>
+
+    <context name="Top">
+      <mousebind button="Left" action="Drag">
+        <action name="Resize"><edge>top</edge></action>
+      </mousebind>
+    </context>
+    <context name="Bottom">
+      <mousebind button="Left" action="Drag">
+        <action name="Resize"><edge>bottom</edge></action>
+      </mousebind>
+    </context>
+    <context name="Left">
+      <mousebind button="Left" action="Drag">
+        <action name="Resize"><edge>left</edge></action>
+      </mousebind>
+    </context>
+    <context name="Right">
+      <mousebind button="Left" action="Drag">
+        <action name="Resize"><edge>right</edge></action>
+      </mousebind>
+    </context>
+    <context name="TopLeft">
+      <mousebind button="Left" action="Drag">
+        <action name="Resize"><edge>top_left</edge></action>
+      </mousebind>
+    </context>
+    <context name="TopRight">
+      <mousebind button="Left" action="Drag">
+        <action name="Resize"><edge>top_right</edge></action>
+      </mousebind>
+    </context>
+    <context name="BottomLeft">
+      <mousebind button="Left" action="Drag">
+        <action name="Resize"><edge>bottom_left</edge></action>
+      </mousebind>
+    </context>
+    <context name="BottomRight">
+      <mousebind button="Left" action="Drag">
+        <action name="Resize"><edge>bottom_right</edge></action>
+      </mousebind>
+    </context>
+
     <context name="Desktop">
       <mousebind button="Right" action="Press">
         <action name="ShowMenu"><menu>root-menu</menu></action>
@@ -147,6 +266,7 @@
         <action name="ShowMenu"><menu>client-list-combined-menu</menu></action>
       </mousebind>
     </context>
+
     <context name="Root">
       <mousebind button="Right" action="Press">
         <action name="ShowMenu"><menu>root-menu</menu></action>
@@ -155,23 +275,26 @@
         <action name="ShowMenu"><menu>client-list-combined-menu</menu></action>
       </mousebind>
     </context>
-    <context name="MoveResize">
-      <mousebind button="Up" action="Click">
-        <action name="GoToDesktop"><to>previous</to></action>
+
+    <context name="Close">
+      <mousebind button="Left" action="Click">
+        <action name="Close"/>
       </mousebind>
-      <mousebind button="Down" action="Click">
-        <action name="GoToDesktop"><to>next</to></action>
+    </context>
+    <context name="Maximize">
+      <mousebind button="Left" action="Click">
+        <action name="ToggleMaximize"/>
       </mousebind>
-      <mousebind button="A-Up" action="Click">
-        <action name="GoToDesktop"><to>previous</to></action>
-      </mousebind>
-      <mousebind button="A-Down" action="Click">
-        <action name="GoToDesktop"><to>next</to></action>
+    </context>
+    <context name="Iconify">
+      <mousebind button="Left" action="Click">
+        <action name="Iconify"/>
       </mousebind>
     </context>
   </mouse>
 
   <applications>
+    <!-- All new windows get focus immediately -->
     <application name="*">
       <focus>yes</focus>
     </application>

@@ -1,10 +1,22 @@
 #!/bin/bash
+# Openbox autostart — runs once after the WM initialises
 
-# Set wallpaper
+# ── Screen power management: disable blanking/sleep ──────────────────────────
+xset s off
+xset -dpms
+xset s noblank
+
+# ── Apply X resource settings (xterm colors, DPI, etc.) ──────────────────────
+xrdb -merge /root/.Xresources
+
+# ── NumLock on ────────────────────────────────────────────────────────────────
+numlockx on &
+
+# ── Wallpaper ─────────────────────────────────────────────────────────────────
 feh --bg-scale /root/wallpaper.png &
 
-# Start panel
-tint2 &
+# ── Notification daemon ───────────────────────────────────────────────────────
+dunst &
 
-# Compositor (light, reduces tearing)
-# xcompmgr &
+# ── Panel ─────────────────────────────────────────────────────────────────────
+tint2 &

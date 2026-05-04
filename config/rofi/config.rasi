@@ -1,0 +1,25 @@
+configuration {
+    /* Show drun (installed apps), run (bare commands), window switcher */
+    modi:                   "drun,run,window";
+    show-icons:             true;
+    icon-theme:             "Papirus-Dark";
+
+    /* App launcher display */
+    drun-display-format:    "{name}";
+    display-drun:           "Apps";
+    display-run:            "Run";
+    display-window:         "Windows";
+
+    /* Behaviour */
+    sidebar-mode:           false;
+    case-sensitive:         false;
+    sort:                   true;
+    sorting-method:         "fzf";
+    matching:               "fuzzy";
+
+    /* Layout */
+    lines:                  8;
+    columns:                1;
+
+    @theme "/root/.config/rofi/theme.rasi"
+}

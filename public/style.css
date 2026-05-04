@@ -267,17 +267,27 @@ html, body {
 #terminal-root {
   flex: 1;
   position: relative;
-  background: var(--base);
+  background: #151515;
   overflow: hidden;
 }
 
 .term-pane {
   position: absolute;
   inset: 0;
-  padding: 4px 6px;
+  padding: 6px 8px;
   display: none;
+  background: #151515;
 }
 .term-pane.active { display: block; }
+
+/* Make the xterm viewport fill the pane so there's no gap */
+.term-pane .xterm,
+.term-pane .xterm-screen {
+  height: 100% !important;
+}
+.term-pane .xterm-viewport {
+  background: #151515 !important;
+}
 
 /* xterm scrollbar */
 .xterm-viewport::-webkit-scrollbar { width: 6px; }

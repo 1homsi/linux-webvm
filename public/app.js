@@ -129,7 +129,7 @@ function openSession(tabId, name) {
     allowTransparency: false,
     macOptionIsMeta: true,
     theme: {
-      background:    '#1e1e2e',
+      background:    '#151515',
       foreground:    '#cdd6f4',
       cursor:        '#f5e0dc',
       cursorAccent:  '#1e1e2e',

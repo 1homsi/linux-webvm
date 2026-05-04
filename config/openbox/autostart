@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# Set wallpaper
+feh --bg-scale /root/wallpaper.png &
+
+# Start panel
+tint2 &
+
+# Compositor (light, reduces tearing)
+# xcompmgr &
